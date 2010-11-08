@@ -1,0 +1,15 @@
+.online_container {
+    position: relative;
+}
+#online_badge {
+    position: absolute;
+    text-align: center;
+    bottom: 15px;
+    right: 15px;
+    padding: 0 1px;
+    -moz-border-radius: 8px;
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    font-size:10px;
+}
