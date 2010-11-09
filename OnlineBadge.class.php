@@ -33,9 +33,6 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
     function show_action()
     {
         $active_time = $my_messaging_settings['active_time'];
-        $users = (int) get_users_online_count($active_time ? $active_time : 5);
-        if ($users > 0) {?>
-            <span id="online_badge"><?= $users ?></span>
-        <?}
+        echo (int) get_users_online_count($active_time ? $active_time : 5);
     }
 }
