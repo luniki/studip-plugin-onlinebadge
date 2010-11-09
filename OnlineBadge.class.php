@@ -28,20 +28,14 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         $script_attributes = array(
             'src'   => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/javascripts/application.js');
         PageLayout::addHeadElement('script', $script_attributes, '');
-
-
-
     }
 
-    /**
-     * This method dispatches all actions.
-     *
-     * @param string   part of the dispatch path that was not consumed
-     */
-    function perform($unconsumed_path)
+    function show_action()
     {
-        $trails_root = $this->getPluginPath();
-        $dispatcher = new Trails_Dispatcher($trails_root, NULL, NULL);
-        $dispatcher->dispatch($unconsumed_path);
+        $active_time = $my_messaging_settings['active_time'];
+        $users = (int) get_users_online_count($active_time ? $active_time : 5);
+        if ($users > 0) {?>
+            <span id="online_badge"><?= $users ?></span>
+        <?}
     }
 }
