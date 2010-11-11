@@ -55,7 +55,7 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         foreach ($users as $id => $user) {
             if ($user['is_buddy']) {
                 // TODO utf-8
-                $result['buddies'][$id] = $user['name'];
+                $result['buddies'][utf8_encode($id)] = utf8_encode($user['name']);
             }
         }
 
@@ -64,10 +64,5 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
 
         // hack to prevent meddling with presence of users
         exit;
-    }
-
-    function getOnlineBuddies()
-    {
-        return array("foo", "bar");
     }
 }

@@ -10,8 +10,8 @@ jQuery(function($) {
         // no state set yet or
         // last sync time at least 5 minutes ago (in ms)
         if (!sessionStorage.onlineBadgeBuddies || 
-            sessionStorage.onlineBadgeSyncTime + 300000 < new Date().getTime()) {
-            console.log("clear state");
+            sessionStorage.onlineBadgeSyncTime < new Date().getTime() - 300000) {
+            //console.log("clear state");
             sessionStorage.onlineBadgeBuddies = "{}";
         }
     }
@@ -36,6 +36,7 @@ jQuery(function($) {
                       }
 
                       if (data.online > 0) {
+                          // TODO fix title attribute in webservice
                           badge.html(data.online).show().attr("title", a.attr("title"));
                       } else {
                           badge.hide();
