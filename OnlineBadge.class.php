@@ -9,8 +9,6 @@
  * the License, or (at your option) any later version.
  */
 
-require_once 'vendor/trails/trails.php';
-
 class OnlineBadge extends StudipPlugin implements SystemPlugin
 {
     /**
@@ -19,20 +17,57 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
     function __construct()
     {
         parent::__construct();
-        // setting up the navigation
-        $style_attributes = array(
-            'rel'   => 'stylesheet',
-            'href'  => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/stylesheets/online_badge.css');
-        PageLayout::addHeadElement('link',  array_merge($style_attributes, array())); 
+        PageLayout::addHeadElement('link', array(
+            'rel' => 'stylesheet',
+            'href' => $this->getPluginUrl() . '/stylesheets/online_badge.css'));
 
-        $script_attributes = array(
-            'src'   => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/javascripts/application.js');
-        PageLayout::addHeadElement('script', $script_attributes, '');
+        PageLayout::addHeadElement('script', array(
+            'src' => $this->getPluginUrl() . '/javascripts/application.js'), '');
+
+        // pnotify
+        PageLayout::addHeadElement('link', array(
+            'rel' => 'stylesheet',
+            'href' => $this->getPluginUrl() . '/stylesheets/jquery.pnotify.default.css'));
+        PageLayout::addHeadElement('script', array(
+            'src' => $this->getPluginUrl() . '/javascripts/jquery.pnotify.min.js'), '');
+
+        // jquery-tmpl
+        PageLayout::addHeadElement('script', array(
+            'src' => $this->getPluginUrl() . '/javascripts/jquery.mustache.js'), '');
+
+        // add template
+        $factory = new Flexi_TemplateFactory(dirname(__FILE__) . "/flexi/");
+        PageLayout::addBodyElements($factory->render("jstemplate"));
     }
 
     function show_action()
     {
         $active_time = $my_messaging_settings['active_time'];
-        echo (int) get_users_online_count($active_time ? $active_time : 5);
+
+        $users = get_users_online($active_time ? $active_time : 5, 'no_title');
+
+
+        $result = array(
+            'online' => (int) sizeof($users)
+          , 'buddies' => array()
+        );
+
+        foreach ($users as $id => $user) {
+            if ($user['is_buddy']) {
+                // TODO utf-8
+                $result['buddies'][$id] = $user['name'];
+            }
+        }
+
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode($result);
+
+        // hack to prevent meddling with presence of users
+        exit;
+    }
+
+    function getOnlineBuddies()
+    {
+        return array("foo", "bar");
     }
 }
