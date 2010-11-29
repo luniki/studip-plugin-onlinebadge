@@ -9,7 +9,7 @@ jQuery(function($) {
         templates[name] = $("#online-badge-" + name).text().trim();
     });
 
-announce({"root@studip": "Prof. Dr. Root"});
+//announce({"root@studip": "Prof. Dr. Root"});
 
     resyncSessionStorage();
 
