@@ -132,7 +132,6 @@ jQuery(function($) {
                 title: title
                 , text: text
                 , image: pluginUrl('avatar/' + id)
-                , sticky: true
             });
         });
     }
