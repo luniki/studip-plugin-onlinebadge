@@ -1,6 +1,10 @@
 jQuery(function($) {
-    var a = $('#barTopMenu li a[href="online.php"]')
-    , li = a.parent()
+    var a = $('#barTopMenu li a[href="online.php"]');
+    if (a.length === 0) {
+        return;
+    }
+
+    var li = a.parent()
     // insert hidden badge
     , badge = $('<span id="online_badge">').appendTo(li).hide()
     , templates = {};
