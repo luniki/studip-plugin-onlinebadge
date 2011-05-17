@@ -16,6 +16,10 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
      */
     function __construct()
     {
+        if (!$GLOBALS["user"]->id) {
+            return;
+        }
+
         parent::__construct();
         PageLayout::addHeadElement('link', array(
             'rel' => 'stylesheet',
