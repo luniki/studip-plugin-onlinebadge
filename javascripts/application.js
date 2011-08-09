@@ -1,5 +1,5 @@
 jQuery(function($) {
-    var a = $('#barTopMenu li a[href="online.php"]');
+    var a = $('#barTopMenu li a[href*="online.php"]');
     if (a.length === 0) {
         return;
     }
