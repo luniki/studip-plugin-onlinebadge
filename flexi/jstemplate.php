@@ -11,3 +11,7 @@
         title="<?= _("Nachricht an Benutzer verschicken") ?>"
         class="mail">Nachricht</a>
 </script>
+
+<script id="online-badge-multi-text" type="text/x-jquery-tmpl">
+{{usernames}} <?= _("sind online.") ?>
+</script>
