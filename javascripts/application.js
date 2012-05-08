@@ -9,8 +9,8 @@ jQuery(function($) {
     , badge = $('<span id="online_badge">').appendTo(li).hide()
     , templates = {};
 
-    $.each('single-title single-text'.split(" "), function (i, name) {
-        templates[name] = $("#online-badge-" + name).text().trim();
+    $.each('single-title single-text multi-text'.split(" "), function (i, name) {
+        templates[name] = $.trim($("#online-badge-" + name).html());
     });
 
 //announce({"root@studip": "Prof. Dr. Root"});
@@ -25,7 +25,7 @@ jQuery(function($) {
 
     // update badge and repeat it every so often
     updateBadge();
-    setInterval(updateBadge, 5 * 1000);
+    setInterval(updateBadge, 30 * 1000);
 
 
     function resyncSessionStorage() {
@@ -141,14 +141,14 @@ jQuery(function($) {
     }
 
     function announceBuddies(buddies) {
-        var text = '';
+        var usernames = [];
         $.each(buddies, function (id, username) {
-            text += $.mustache(onlineTemplate,  {name: username});
+            usernames.push(username);
         });
-
+        
         $.gritter.add({
-            title: "blurb"
-            , text: text
+            title: "TODO"
+            , text: $.mustache(templates["multi-text"], {usernames: usernames.join(', ')})
         });
     }
 
