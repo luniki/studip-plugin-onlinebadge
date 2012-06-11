@@ -147,7 +147,7 @@ jQuery(function($) {
         });
         
         $.gritter.add({
-            title: "TODO"
+            title: "Meine Buddies:"
             , text: $.mustache(templates["multi-text"], {usernames: usernames.join(', ')})
         });
     }
