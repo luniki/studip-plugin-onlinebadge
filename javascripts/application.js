@@ -1,9 +1,10 @@
 jQuery(function($) {
-    var a = $('#barTopMenu li a[href*="online.php"]');
+    var a = $('#barTopMenu li#nav_community a');
     if (a.length === 0) {
         return;
     }
-
+    
+        
     var li = a.parent()
     // insert hidden badge
     , badge = $('<span id="online_badge">').appendTo(li).hide()
@@ -13,8 +14,6 @@ jQuery(function($) {
         templates[name] = $.trim($("#online-badge-" + name).html());
     });
 
-//announce({"root@studip": "Prof. Dr. Root"});
-
     resyncSessionStorage();
 
     // add class to parent li and redirect to the a's href on click
@@ -22,6 +21,7 @@ jQuery(function($) {
         .bind('click', function() {
             location = STUDIP.ABSOLUTE_URI_STUDIP + a.attr('href');
         });
+
 
     // update badge and repeat it every so often
     updateBadge();
@@ -52,9 +52,13 @@ jQuery(function($) {
 
                       if (data.online > 0) {
                           var title = getBadgeTitle(data.online);
-                          badge.html(data.online).show().attr('title', title);
+                          if (badge) {
+                              badge.html(data.online).show().attr('title', title);
+                          }
                       } else {
-                          badge.hide();
+                          if (badge) {
+                              badge.hide();
+                          }
                       }
 
                       notifyBuddyActivities(data.buddies);
@@ -147,7 +151,7 @@ jQuery(function($) {
         });
         
         $.gritter.add({
-            title: "Meine Buddies:"
+            title: "Folgende Buddies sind online"
             , text: $.mustache(templates["multi-text"], {usernames: usernames.join(', ')})
         });
     }
