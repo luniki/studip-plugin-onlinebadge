@@ -18,8 +18,10 @@ jQuery(function($) {
 
     // add class to parent li and redirect to the a's href on click
     li.addClass("online_container")
-        .bind('click', function() {
-            location = STUDIP.ABSOLUTE_URI_STUDIP + a.attr('href');
+        .bind('click', function(event) {
+            if (!event.ctrlKey && !event.metaKey) {
+                location = STUDIP.ABSOLUTE_URI_STUDIP + a.attr('href');
+            }
         });
 
 
