@@ -20,6 +20,11 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
             return;
         }
 
+        if (UpdateInformation::isCollecting()) {
+            $data = $this->getData();
+            UpdateInformation::setInformation('OnlineBadge.update', $data);
+        }
+
         parent::__construct();
         PageLayout::addHeadElement('link', array(
             'rel' => 'stylesheet',
@@ -28,14 +33,6 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         PageLayout::addHeadElement('script', array(
             'src' => $this->getPluginUrl() . '/javascripts/application.js'), '');
 
-/*
-        // pnotify
-        PageLayout::addHeadElement('link', array(
-            'rel' => 'stylesheet',
-            'href' => $this->getPluginUrl() . '/stylesheets/jquery.pnotify.default.css'));
-        PageLayout::addHeadElement('script', array(
-            'src' => $this->getPluginUrl() . '/javascripts/jquery.pnotify.min.js'), '');
-*/
         // gritter
         PageLayout::addHeadElement('link', array(
             'rel' => 'stylesheet',
@@ -52,7 +49,7 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         PageLayout::addBodyElements($factory->render("jstemplate"));
     }
 
-    function show_action()
+    protected function getData()
     {
         global $my_messaging_settings;
         $active_time = $my_messaging_settings['active_time'];
@@ -62,7 +59,7 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         $buddies = array();
         foreach ($users as $id => $user) {
             if ($user['is_buddy']) {
-                $buddies[utf8_encode($id)] = utf8_encode($user['name']);
+                $buddies[$id] = $user['name'];
             }
         }
 
@@ -72,21 +69,16 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         } else if ($online === 1) {
             $title = _('Außer Ihnen ist eine Person online');
         } else {
-            $title = sprintf(_('Es sind außer Ihnen %d Personen online'),
-                             $online);
+            $title = sprintf(_('Es sind außer Ihnen %d Personen online'), $online);
         }
 
         $result = array(
-            'online' => sizeof($buddies)
-            , 'title' => utf8_encode($title)
-            , 'buddies' => $buddies
+            'online' => sizeof($buddies),
+            'title' => $title,
+            'buddies' => $buddies
         );
 
-        header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode($result);
-
-        // hack to prevent meddling with presence of users
-        exit;
+        return $result;
     }
 
     function avatar_action($username)
