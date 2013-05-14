@@ -28,14 +28,6 @@ class OnlineBadge extends StudipPlugin implements SystemPlugin
         PageLayout::addHeadElement('script', array(
             'src' => $this->getPluginUrl() . '/javascripts/application.js'), '');
 
-/*
-        // pnotify
-        PageLayout::addHeadElement('link', array(
-            'rel' => 'stylesheet',
-            'href' => $this->getPluginUrl() . '/stylesheets/jquery.pnotify.default.css'));
-        PageLayout::addHeadElement('script', array(
-            'src' => $this->getPluginUrl() . '/javascripts/jquery.pnotify.min.js'), '');
-*/
         // gritter
         PageLayout::addHeadElement('link', array(
             'rel' => 'stylesheet',
