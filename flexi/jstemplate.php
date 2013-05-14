@@ -10,7 +10,7 @@
                                     array('sms_source_page' => URLHelper::getURL('TODO'))) ?>&amp;rec_uname={{id}}"
         title="<?= _("Nachricht an Benutzer verschicken") ?>"
         class="mail">Nachricht</a>
-     <a href="<?= PluginEngine::getLink('blubber', null, 'streams/global') ?>?mention={{id}}"
+     <a href="<?= PluginEngine::getLink('blubber', null, 'streams/global', true) ?>?mention={{id}}"
         title="<?= _("Blubbern") ?>"
         class="blubber">Blubbern</a>
 </script>
