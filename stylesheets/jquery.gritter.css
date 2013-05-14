@@ -112,3 +112,8 @@ a.mail {
     padding-left: 16px;
     background:url(../../../../assets/images/icons/16/grey/mail.png) no-repeat left bottom;
 }
+
+a.blubber {
+    padding-left: 16px;
+    background:url(../../../../assets/images/icons/16/grey/blubber.png) no-repeat left bottom;
+}
