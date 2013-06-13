@@ -20,7 +20,7 @@ jQuery(function($) {
     li.addClass("online_container")
         .bind('click', function(event) {
             if (!event.ctrlKey && !event.metaKey) {
-                location = STUDIP.ABSOLUTE_URI_STUDIP + a.attr('href');
+                location = a.attr('href');
             }
         });
 
